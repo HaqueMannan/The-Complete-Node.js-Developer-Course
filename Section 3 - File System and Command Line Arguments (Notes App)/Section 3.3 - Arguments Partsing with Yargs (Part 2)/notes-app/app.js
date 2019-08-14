@@ -19,6 +19,8 @@ const getNotes = require('./notes.js')
 // By default, yargs is at version 1.0.0 (run the command in the terminal node app.js --version)
 // To customise the yargs version we can use the version function e.g. yargs.version('1.1.0')
 
+// We can output the argv within the handler as it will have access to this from the function.
+
 
 ///////////////////////////////////////////////////////
 // NOTES APP CODE
@@ -34,11 +36,20 @@ yargs.command({
    describe: 'Add a new note',
    builder: {
       title: {
-         describe: 'Note title'
+         describe: 'Note title',
+         demandOption: true,
+         type: 'string'
+      },
+      body: {
+         describe: 'Note body',
+         demandOption: true,
+         type: 'string'
       }
    },
    handler: function(argv) {
       console.log('Adding a new note!', argv)
+      console.log('Title: ' + argv.title)
+      console.log('Body: ' + argv.body)
    }
 })
 
@@ -50,20 +61,6 @@ yargs.command({
       console.log('Removing the note!')
    }
 })
-
-
-///////////////////////////////////////////////////////
-// CHALLENGE - Add two commands:
-///////////////////////////////////////////////////////
-
-// 1. Setup command to support "list" command (print placeholder message for now)
-// 2. Setup command to support "read" command (print placeholder message for now)
-// 3. Test your work by running both commands and ensure correct output
-
-
-///////////////////////////////////////////////////////
-// SOLUTION
-///////////////////////////////////////////////////////
 
 // Create list command
 yargs.command({
@@ -83,5 +80,31 @@ yargs.command({
    }
 })
 
-// Test Commands
+// If we required to view the yargs.argv parsed command line argument output, we need to call on the yargs.argv command so that yargs knows to parse the command line arguments:
 console.log(yargs.argv)
+// If we do not need to access yargs.argv, we can call on parse() function to run without any output (note that if we output the argv in the command handler then this will display the parsed output).
+yargs.parse()
+
+
+
+
+///////////////////////////////////////////////////////
+// CHALLENGE - Add two commands:
+///////////////////////////////////////////////////////
+
+// 1. Add an option to Yargs.
+// 2. Setup a body option for the add command
+// 3. Configure the option with a description, make it required and set the type to string
+// 4. Log the body value in the handler function
+// 5. Test your work!
+
+
+///////////////////////////////////////////////////////
+// SOLUTION
+///////////////////////////////////////////////////////
+// Solution above within the add command, options object builder property.
+// Test by running terminal command:
+// 1) node app.js add --title="My title"
+// This should fail and the terminal print out Missing required argument: body
+// 2) node app.js add --title="My title" --body:"This is the body text"
+// This should console log both the title and body options user input value i.e. "This is my title" and "This is my body text"
