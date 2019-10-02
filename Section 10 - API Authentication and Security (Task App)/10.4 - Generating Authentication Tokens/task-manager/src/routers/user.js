@@ -109,6 +109,6 @@ module.exports = router
 // 1. Generate a token for the saved user
 // 2. Send back the token and the user
 // 3. Create a new user from Postman and confirm the token is there
-// 3. To test from Postman:
+// 4. To test from Postman:
 //    - ensure script npm run dev is running and the database server is also running
 //    - Run the POST Create user URL in postman to make a API request to the servers
