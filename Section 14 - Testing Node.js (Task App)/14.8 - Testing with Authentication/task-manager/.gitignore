@@ -1,0 +1,3 @@
+# Example .gitignore file when committing actual live project:
+# node_modiles
+# config
