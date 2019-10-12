@@ -36,9 +36,9 @@ test('Should login existing user', async () => {
       .post('/users/login')
       .send({
          email: userOne.email,
-         password: 'wrongPassword'
+         password: userOne.password
       })
-      .expect(400)
+      .expect(200)
 })
 
 test('Should not login non-existent user', async () => {
@@ -46,9 +46,9 @@ test('Should not login non-existent user', async () => {
       .post('/users/login')
       .send({
          email: userOne.email,
-         password: userOne.password
+         password: 'wrongPassword'
       })
-      .expect(200)
+      .expect(400)
 })
 
 test('Should get profile for user', async () => {
