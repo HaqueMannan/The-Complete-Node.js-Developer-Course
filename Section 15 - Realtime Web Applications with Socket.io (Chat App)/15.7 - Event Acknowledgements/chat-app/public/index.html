@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Chat App</title>
+   </head>
+   <body>
+      Chat App
+      <!-- <button id="increment">+1</button> -->
+
+      <form id="message-form">
+         <input name="message" placeholder="Message">
+         <button>Send</button>
+      </form>
+      <button id="send-location">Send location</button>
+
+      <!-- Load in JavaScript Files (Order is important) -->
+      <script src="/socket.io/socket.io.js"></script> 
+      <script src="/js/chat.js"></script>
+      <!-- <script src="/js/count.js"></script> -->
+   </body>
+</html>
+
+
+<!--
+SOCKET.IO CLIENT FURTHER INFORMATION 
+>  The <button> element has an id so that we can easily target it from client side JavaScript i.e. we can 
+   create a event listener for the click event of this button to trigger a callback function.
+>  The form input element can have a attribute of name which we can specify a name for the form input. This will allow us access the forms element by its name from within our JavaScript i.e. chat.js. This will ensure if there was another input on the page, this does not break our application. We can select this element using the e object and calling .target which represents the form we are listening on. We can then use .element to target a form element by its name attribute. We can use .value to get back its value.
+-->
