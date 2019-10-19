@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="icon" href="/img/favicon.png">
+      <link rel="stylesheet" href="/css/styles.min.css">
+      <title>Chat App</title>
+   </head>
+   <body>
+      <div class="chat">
+         <div id="sidebar" class="chat__sidebar">
+            <!-- Render Sidebar from Template Location -->
+         </div>
+         <div class="chat__main">
+            <!-- Render Message from Template Location -->
+            <div id="messages" class="chat__messages"></div>
+
+            <div class="compose">
+               <!-- Message Form Input -->
+               <form id="message-form">
+                  <input name="message" placeholder="Message" required autocomplete="off">
+                  <button>Send</button>
+               </form>
+               <button id="send-location">Send location</button>
+            </div>
+         </div>
+      </div>
+
+      <!-- Mustache Template -->
+      <script id="location-message-template" type="text/html">
+         <div class="message">
+            <p>
+               <span class="message__name">{{ username }}</span>
+               <span class="message__meta">{{ createdAt }}</span>
+            </p>
+            <!-- target="_blank" will open the link in a new tab -->
+            <p><a href="{{url}}" target="_blank">My current location</a></p>  
+         </div>
+      </script>
+
+      <script id="message-template" type="text/html">
+         <div class="message">
+            <p>
+               <span class="message__name">{{ username }}</span>
+               <span class="message__meta">{{ createdAt }}</span>
+            </p>
+            <p>{{ message }}</p>
+         </div>
+      </script>
+
+      <script id="sidebar-template" type="text/html">
+         <h2 class="room-title">{{ room }}</h2>
+         <h3 class="list-title">Users</h3>
+         <ul class="users">
+            {{#users}}
+               <li>{{ username }}</li>
+            {{/users}}
+         </ul>
+      </script>
+
+      <!-- Load in JavaScript Files (Order is important) -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+      <script src="/socket.io/socket.io.js"></script> 
+      <script src="/js/chat.js"></script>
+   </body>
+</html>
+
+
+<!--
+SOCKET.IO CLIENT FURTHER INFORMATION
+>  The <button> element has an id so that we can easily target it from client side JavaScript i.e. we can 
+   create a event listener for the click event of this button to trigger a callback function.
+>  The form input element can have a attribute of name which we can specify a name for the form input. This will allow us access the forms element by its name from within our JavaScript i.e. chat.js. This will ensure if there was another input on the page, this does not break our application. We can select this element using the e object and calling .target which represents the form we are listening on. We can then use .element to target a form element by its name attribute. We can use .value to get back its value.
+-->
+
+<!--
+LIBRARIES
+>  Mustache library will allow us to render our HTML templates
+>  Moment library will allow us to manipulate time to record timestamps.
+>  QueryString (qs) library will allow us to setup room/user names.
+-->
+
+<!--
+MUSTACHE FURTHER INFORMATION
+>  We create a script tag and add HTML inbetween this tag.
+>  For all of our templates we define an id i.e. we add an id attribute on the script tag containing the HTML template. This will be a way to target the template from our JavaScript file i.e. Chat.js.
+>  We also set the script type to text/html to let the browser know that we have HTML inside of the 
+   <script> element for the template.
+>  We can use the mustache library to render the templates somewhere in our application.
+>  We would not see the templates in our application by default. We will only see them when we actually 
+   render content.
+>  Mustache allows us to use the opening and closing of double curly brackets syntax to inject values. Inside of this we reference the value we are going to pass in.
+>  The JavaScript can inject the value within Mustache.render() where the first argument is the template to 
+   use and the second argument is an object where we pass in key:value pairs where the key is the name we defined in the HTML for the injected data.
+>  To inject a data from our client side JavaScript we can use the double opening and closing curly 
+   brackets {{}} with the name of the injected data variable we are accessing from the client side JavaScript.
+>  To inject data from an array object we use the double opening and closing curly brackets and within this 
+   we use the hash # followed by the array name. We then create a opening and closing curly brackets followed by the forward slash and the array name to close the array tag.
+   Everything inside this array tags will happen for each element in that array and we have access to the data for that object (element).
+-->
